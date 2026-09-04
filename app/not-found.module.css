@@ -1,0 +1,503 @@
+/* ==========================================================================
+   404 — SYSTEM NOT FOUND
+   ------------------------------------------------------------------------
+   Design tokens are declared as CSS custom properties on `.page` so this
+   file can be dropped into an existing design system quickly: replace the
+   values below with your existing theme tokens (colors, fonts, radii) and
+   every rule downstream stays correct.
+   ========================================================================== */
+
+.page {
+  /* ---- color tokens — swap these for your existing theme variables ---- */
+  --bg: #06060a;
+  --bg-elevated: rgba(255, 255, 255, 0.025);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-primary: #f5f5f7;
+  --text-muted: #8d8d99;
+  --pink: #ff2d78;
+  --pink-soft: #ff5fa0;
+  --purple: #8b5cf6;
+  --purple-deep: #4c1d95;
+  --success: #34d399;
+
+  /* ---- type tokens ---- */
+  --font-display: var(--font-display, "Space Grotesk"), system-ui, sans-serif;
+  --font-mono: var(--font-mono, "JetBrains Mono"), ui-monospace, monospace;
+  --font-body: var(--font-body, "Inter"), system-ui, sans-serif;
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  padding: 6rem 1.5rem;
+}
+
+/* ==========================================================================
+   Ambient background layers
+   ========================================================================== */
+
+.gridBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, black 40%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, black 40%, transparent 90%);
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.35;
+  animation: scanDrift 9s linear infinite;
+}
+
+.glow {
+  position: absolute;
+  z-index: 0;
+  width: 46vw;
+  height: 46vw;
+  max-width: 620px;
+  max-height: 620px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.32;
+  pointer-events: none;
+}
+
+.glowPink {
+  top: -8%;
+  left: 4%;
+  background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+  animation: floatA 16s ease-in-out infinite alternate;
+}
+
+.glowPurple {
+  bottom: -14%;
+  right: 2%;
+  background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+  animation: floatB 20s ease-in-out infinite alternate;
+}
+
+@keyframes floatA {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(4%, 6%) scale(1.12); }
+}
+@keyframes floatB {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-5%, -4%) scale(1.08); }
+}
+@keyframes scanDrift {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(3px); }
+}
+
+/* Radar / coordinate rings ------------------------------------------------ */
+
+.radar {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: min(120vw, 1400px);
+  height: min(120vw, 1400px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.radarRing {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  width: calc(30% + (var(--i) * 22%));
+  height: calc(30% + (var(--i) * 22%));
+  animation: radarPulse 6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.6s);
+}
+
+.radarCross {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 60%;
+  height: 60%;
+}
+.radarCross::before,
+.radarCross::after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.07) 40%,
+    rgba(255, 255, 255, 0.07) 60%,
+    transparent
+  );
+}
+.radarCross::before {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+.radarCross::after {
+  left: 50%;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.07) 40%,
+    rgba(255, 255, 255, 0.07) 60%,
+    transparent
+  );
+}
+
+@keyframes radarPulse {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.7; }
+}
+
+/* Corner coordinate labels ------------------------------------------------ */
+
+.coordLabel {
+  position: absolute;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+.coordTl { top: 2rem; left: 2rem; }
+.coordBr { bottom: 2rem; right: 2rem; }
+
+@media (max-width: 640px) {
+  .coordLabel { display: none; }
+}
+
+/* ==========================================================================
+   Content
+   ========================================================================== */
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 720px;
+  animation: contentIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes contentIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  backdrop-filter: blur(6px);
+  margin-bottom: 2rem;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 0 0 rgba(255, 45, 120, 0.6);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 45, 120, 0.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(255, 45, 120, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 45, 120, 0); }
+}
+
+.statusText {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+
+/* Hero 404 ----------------------------------------------------------------- */
+
+.hero404Wrap {
+  position: relative;
+  line-height: 0.85;
+  margin-bottom: 0.5rem;
+}
+
+.hero404 {
+  position: relative;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(6rem, 22vw, 13rem);
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-soft) 35%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 34px rgba(255, 45, 120, 0.22))
+          drop-shadow(0 0 70px rgba(139, 92, 246, 0.16));
+  animation: heroIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero404::before,
+.hero404::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+}
+
+.hero404::before {
+  animation: glitchTop 7s ease-in-out infinite;
+}
+.hero404::after {
+  animation: glitchBottom 7s ease-in-out infinite;
+}
+
+@keyframes heroIn {
+  0%   { opacity: 0; transform: translateY(24px) scale(0.97); filter: blur(6px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes glitchTop {
+  0%, 92%, 100% { opacity: 0; clip-path: inset(0 0 100% 0); transform: translate(0, 0); }
+  93%  { opacity: 0.5; clip-path: inset(0 0 60% 0); transform: translate(-3px, -1px); }
+  95%  { opacity: 0.35; clip-path: inset(20% 0 40% 0); transform: translate(2px, 1px); }
+  96%  { opacity: 0; }
+}
+@keyframes glitchBottom {
+  0%, 90%, 100% { opacity: 0; clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
+  91%  { opacity: 0.4; clip-path: inset(60% 0 0 0); transform: translate(3px, 1px); }
+  94%  { opacity: 0.3; clip-path: inset(40% 0 20% 0); transform: translate(-2px, -1px); }
+  95%  { opacity: 0; }
+}
+
+/* Heading / copy ------------------------------------------------------------ */
+
+.heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  letter-spacing: 0.02em;
+  margin: 0.5rem 0 0.9rem;
+}
+
+.subtext {
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 34rem;
+  margin: 0 0 2.5rem;
+}
+
+/* CTAs ----------------------------------------------------------------------- */
+
+.ctaGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease,
+              background 0.25s ease,
+              border-color 0.25s ease,
+              color 0.25s ease;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--pink-soft);
+  outline-offset: 3px;
+}
+
+.btnPrimary {
+  color: #0a0a0f;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-soft) 100%);
+  box-shadow: 0 0 0 rgba(255, 45, 120, 0);
+}
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -8px rgba(255, 45, 120, 0.55);
+}
+.btnPrimary:active {
+  transform: translateY(0);
+}
+
+.btnSecondary {
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+}
+.btnSecondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--purple);
+  background: rgba(139, 92, 246, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.4);
+}
+.btnSecondary:active {
+  transform: translateY(0);
+}
+
+/* Terminal panel -------------------------------------------------------------- */
+
+.terminalPanel {
+  width: 100%;
+  max-width: 26rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  backdrop-filter: blur(8px);
+  text-align: left;
+  overflow: hidden;
+  transform: rotate(-0.6deg);
+  animation: panelIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: rotate(-0.6deg) translateY(10px); }
+  to   { opacity: 1; transform: rotate(-0.6deg) translateY(0); }
+}
+
+.terminalHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.terminalDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+.terminalDot:first-child { background: var(--pink); opacity: 0.7; }
+
+.terminalTitle {
+  margin-left: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.terminalBody {
+  margin: 0;
+  padding: 0.95rem 1rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.85;
+  white-space: pre-wrap;
+  color: var(--text-muted);
+}
+
+.terminalLine {
+  display: block;
+}
+
+.terminalMuted {
+  color: var(--text-muted);
+  opacity: 0.7;
+  margin-right: 0.4rem;
+}
+
+.terminalError {
+  color: var(--pink);
+  margin-right: 0.4rem;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .page { padding: 4.5rem 1.25rem; }
+  .radar { opacity: 0.6; }
+  .ctaGroup { flex-direction: column; width: 100%; }
+  .btn { width: 100%; padding: 1rem 1.5rem; }
+  .terminalPanel { transform: none; }
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .scanlines,
+  .glowPink,
+  .glowPurple,
+  .radarRing,
+  .statusDot,
+  .hero404,
+  .hero404::before,
+  .hero404::after,
+  .content,
+  .terminalPanel {
+    animation: none !important;
+  }
+  .btn,
+  .btnPrimary,
+  .btnSecondary {
+    transition: none;
+  }
+}
