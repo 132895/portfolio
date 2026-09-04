@@ -154,6 +154,14 @@ function Navbar() {
             </a>
           ))}
         </div>
+        {/* <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="button button-small"
+        >
+          Download Resume <ArrowDown size={15} />
+        </a> */}
         <a
           className="button button-small nav-cta"
           href="#contact"
@@ -481,7 +489,7 @@ function App() {
 
   formData.append(
     "access_key",
-    "010cbccc-7421-4bfb-bb5a-2e287842e052"
+    process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || ""
   );
 
   formData.append("subject", "New Portfolio Contact Message");
