@@ -53,9 +53,9 @@ const projects = [
 
     art: "alpha",
 
-    link: "https://github.com/132895",
+    link: "https://gemini-ai-assistant-emk6.onrender.com/",
 
-    github_link:"https://www.youtube.com/"
+    github_link:"https://github.com/132895/gemini-ai-assistant"
   },
 
   {
