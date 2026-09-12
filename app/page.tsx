@@ -49,7 +49,7 @@ const projects = [
 
     description: "A context-aware AI assistant powered by Gemini, featuring conversation memory and real-time information retrieval for intelligent everyday interactions.",
 
-    stack: ["Python", "FastAPI", "Gemini AI"],
+    stack: ["Python", "FastAPI", "Gemini AI","Tavily", "HTML/CSS/JS"],
 
     art: "alpha",
 
