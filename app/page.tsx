@@ -63,8 +63,10 @@ const projects = [
     title: "Jully",
     label: "VOICE ASSISTANT",
     description: "A voice-powered personal assistant that understands spoken commands, provides real-time information, sets reminders, and responds naturally using speech.",
-    stack: ["Python", "FastAPI", "HTML/CSS/JS"],
+    stack: ["Python", "FastAPI", "Gemini AI", "Tavily", "MongoDB", "HTML/CSS/JS"],
    art: "assistant",
+   link: "https://jully-2-o.onrender.com/",
+   github_link:"https://github.com/132895/jully-2.O"
   },
  {
     index: "03",
@@ -78,6 +80,10 @@ const projects = [
     stack: ["Python", "Pandas", "Matplotlib", "Streamlit"],
 
     art: "data",
+    
+    link: "https://gemini-ai-assistant-emk6.onrender.com/",
+
+    github_link:"https://github.com/132895/gemini-ai-assistant"
 },
   // {
   //   index: "04",
