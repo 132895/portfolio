@@ -71,19 +71,18 @@ const projects = [
  {
     index: "03",
 
-    title: "Coming Soon... ",
+    title: "Data Analyzer",
 
     label: "DATA ANALYSIS & VISUALIZATION",
 
-    description: "A Python-powered data analysis tool that processes datasets, generates insightful visualizations, and reveals meaningful patterns through interactive analytics.",
-
+    description: "A Python-powered data analysis tool for processing datasets, cleaning data, generating visualizations, and uncovering meaningful patterns through analysis.",
     stack: ["Python", "Pandas", "Matplotlib", "Streamlit"],
 
     art: "data",
     
-    link: "https://gemini-ai-assistant-emk6.onrender.com/",
+    link: "https://data-analyzer-nsjrsvvfxn2ymtstr8tpci.streamlit.app",
 
-    github_link:"https://github.com/132895/gemini-ai-assistant"
+    github_link:"https://github.com/132895/pandas-data-analyzer"
 },
   // {
   //   index: "04",
